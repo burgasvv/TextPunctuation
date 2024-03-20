@@ -42,9 +42,8 @@ public class TextServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<String> punctuation = new ArrayList<>();
-        StringBuilder stringBuilder = new StringBuilder();
 
-        findPunctuationSeries(getText(), stringBuilder, punctuation);
+        findPunctuationSeries(getText(), punctuation);
         requestProcess(req, punctuation);
         addCookie(resp, createCookie(getMaxLengthPunctuationString(punctuation)));
         forwardRequest(req, resp, PropertiesManager.getProperties().getProperty(TEXT_JSP_FILE_KEY));
@@ -101,10 +100,11 @@ public class TextServlet extends HttpServlet {
 
     }
 
-    private void findPunctuationSeries(String text, StringBuilder stringBuilder, List<String> punctuation)
+    private void findPunctuationSeries(String text, List<String> punctuation)
             throws FileNotFoundException {
 
         String[] symbols = text.split("");
+        StringBuilder stringBuilder = new StringBuilder();
 
         for (String symbol : symbols) {
 
